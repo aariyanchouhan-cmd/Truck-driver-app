@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Truck Driver Navigation</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  color: #172033;
+}
+header {
+  background: #123c32;
+  color: white;
+  padding: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+.container { padding: 16px; }
+input, button {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border-radius: 10px;
+  font-size: 16px;
+}
+input { border: 1px solid #ccc; }
+button {
+  border: none;
+  background: #168653;
+  color: white;
+  font-weight: bold;
+}
+#map {
+  height: 350px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #dce8df;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+}
+.note { font-size: 13px; color: #52616b; }
+</style>
+</head>
+<body>
+<header>🚛 Truck Driver Navigation</header>
+<div class="container">
+  <h3>अपनी मंज़िल खोजें</h3>
+  <input id="destination" placeholder="शहर या जगह का नाम लिखें">
+  <button onclick="searchPlace()">🔍 जगह खोजें</button>
+  <button onclick="myLocation()">📍 मेरी लोकेशन</button>
+  <div id="map">🗺️ आपका मैप यहाँ दिखाई देगा</div>
+  <p class="note">लोकेशन देखने के लिए अपने ब्राउज़र की अनुमति दें।</p>
+</div>
+<script>
+function searchPlace() {
+  const place = document.getElementById('destination').value.trim();
+  if (!place) {
+    alert('कृपया अपनी मंज़िल का नाम लिखें।');
+    return;
+  }
+  window.open(
+    'https://www.google.com/maps/search/?api=1&query=' +
+    encodeURIComponent(place),
+    '_blank'
+  );
+}
+function myLocation() {
+  if (!navigator.geolocation) {
+    alert('आपका ब्राउज़र लोकेशन सपोर्ट नहीं करता।');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      window.open(
+        'https://www.google.com/maps?q=' + lat + ',' + lon,
+        '_blank'
+      );
+    },
+    function() {
+      alert('लोकेशन की अनुमति दें और दोबारा कोशिश करें।');
+    }
+  );
+}
+</script>
+</body>
+</html>
